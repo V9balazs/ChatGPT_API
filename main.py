@@ -4,107 +4,29 @@ import openai
 import tiktoken
 from dotenv import find_dotenv, load_dotenv
 
-_ = load_dotenv(find_dotenv())  # read local .env file
+import load_model
+import message
+
+_ = load_dotenv(find_dotenv())  # .env fájl olvasása
 
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
+# message.rovid_proba()
 
-# def get_completion(prompt, model="gpt-3.5-turbo"):
-#     messages = [{"role": "user", "content": prompt}]
-#     response = openai.ChatCompletion.create(
-#         model=model,
-#         messages=messages,
-#         temperature=0,  # this is the degree of randomness of the model's output
-#     )
-#     return response.choices[0].message["content"]
+# message.role_bemutatas()
 
-# response = get_completion("Take the letters in lolipopp and reverse them")
-# print(response)
+# message.role_szoveg_hossz()
 
+# message.role_osszesitve()
 
-def get_completion_from_messages(messages, model="gpt-3.5-turbo", temperature=0, max_tokens=500):
-    response = openai.ChatCompletion.create(
-        model=model,
-        messages=messages,
-        temperature=temperature,  # this is the degree of randomness of the model's output
-        max_tokens=max_tokens,  # the maximum number of tokens the model can ouptut
-    )
-    return response.choices[0].message["content"]
+# message.token_szam()
 
+# message.delimiter_bemutatas()
 
-# messages = [
-#     {
-#         "role": "system",
-#         "content": """You are an assistant who\
-#  responds in the style of Dr Seuss.""",
-#     },
-#     {
-#         "role": "user",
-#         "content": """write me a very short poem\
-#  about a happy carrot""",
-#     },
-# ]
-# response = get_completion_from_messages(messages, temperature=1)
-# print(response)
+# message.moderation_bemutatas()
 
-# # length
-# messages = [
-#     {
-#         "role": "system",
-#         "content": "All your responses must be \
-# one sentence long.",
-#     },
-#     {"role": "user", "content": "write me a story about a happy carrot"},
-# ]
-# response = get_completion_from_messages(messages, temperature=1)
-# print(response)
+# message.prompt_injection_vedelem()
 
-# # combined
-# messages = [
-#     {
-#         "role": "system",
-#         "content": """You are an assistant who \
-# responds in the style of Dr Seuss. \
-# All your responses must be one sentence long.""",
-#     },
-#     {"role": "user", "content": """write me a story about a happy carrot"""},
-# ]
-# response = get_completion_from_messages(messages, temperature=1)
-# print(response)
+# message.prompt_injection_erzekeles()
 
-
-def get_completion_and_token_count(messages, model="gpt-3.5-turbo", temperature=0, max_tokens=500):
-
-    response = openai.ChatCompletion.create(
-        model=model,
-        messages=messages,
-        temperature=temperature,
-        max_tokens=max_tokens,
-    )
-
-    content = response.choices[0].message["content"]
-
-    token_dict = {
-        "prompt_tokens": response["usage"]["prompt_tokens"],
-        "completion_tokens": response["usage"]["completion_tokens"],
-        "total_tokens": response["usage"]["total_tokens"],
-    }
-
-    return content, token_dict
-
-
-messages = [
-    {
-        "role": "system",
-        "content": """You are an assistant who responds\
- in the style of Dr Seuss.""",
-    },
-    {
-        "role": "user",
-        "content": """write me a very short poem \ 
- about a happy carrot""",
-    },
-]
-response, token_dict = get_completion_and_token_count(messages)
-print(response)
-print(token_dict)
+# message.lanc_gondolkozas()
