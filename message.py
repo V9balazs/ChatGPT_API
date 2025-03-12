@@ -315,3 +315,111 @@ def lanc_gondolkozas():
         final_response = "Sorry, I'm having trouble right now, please try asking another question."
 
     print(final_response)
+
+
+def komplex_feladat_szetbontva():
+    delimiter = "####"
+    system_message = f"""
+   You will be provided with customer service queries. \
+   The customer service query will be delimited with \
+   {delimiter} characters.
+   Output a python list of objects, where each object has \
+   the following format:
+      'category': <one of Computers and Laptops, \
+      Smartphones and Accessories, \
+      Televisions and Home Theater Systems, \
+      Gaming Consoles and Accessories, 
+      Audio Equipment, Cameras and Camcorders>,
+   OR
+      'products': <a list of products that must \
+      be found in the allowed products below>
+
+   Where the categories and products must be found in \
+   the customer service query.
+   If a product is mentioned, it must be associated with \
+   the correct category in the allowed products list below.
+   If no products or categories are found, output an \
+   empty list.
+
+   Allowed products: 
+
+   Computers and Laptops category:
+   TechPro Ultrabook
+   BlueWave Gaming Laptop
+   PowerLite Convertible
+   TechPro Desktop
+   BlueWave Chromebook
+
+   Smartphones and Accessories category:
+   SmartX ProPhone
+   MobiTech PowerCase
+   SmartX MiniPhone
+   MobiTech Wireless Charger
+   SmartX EarBuds
+
+   Televisions and Home Theater Systems category:
+   CineView 4K TV
+   SoundMax Home Theater
+   CineView 8K TV
+   SoundMax Soundbar
+   CineView OLED TV
+
+   Gaming Consoles and Accessories category:
+   GameSphere X
+   ProGamer Controller
+   GameSphere Y
+   ProGamer Racing Wheel
+   GameSphere VR Headset
+
+   Audio Equipment category:
+   AudioPhonic Noise-Canceling Headphones
+   WaveSound Bluetooth Speaker
+   AudioPhonic True Wireless Earbuds
+   WaveSound Soundbar
+   AudioPhonic Turntable
+
+   Cameras and Camcorders category:
+   FotoSnap DSLR Camera
+   ActionCam 4K
+   FotoSnap Mirrorless Camera
+   ZoomMaster Camcorder
+   FotoSnap Instant Camera
+
+   Only output the list of objects, with nothing else.
+   """
+    user_message_1 = f"""
+   tell me about the smartx pro phone and \
+   the fotosnap camera, the dslr one. \
+   Also tell me about your tvs """
+    messages = [
+        {"role": "system", "content": system_message},
+        {"role": "user", "content": f"{delimiter}{user_message_1}{delimiter}"},
+    ]
+    category_and_product_response_1 = load_model.get_completion_from_messages(messages, "gpt-3.5-turbo", 0, 500)
+    print(category_and_product_response_1)
+
+    user_message_2 = f"""
+   my router isn't working"""
+    messages = [
+        {"role": "system", "content": system_message},
+        {"role": "user", "content": f"{delimiter}{user_message_2}{delimiter}"},
+    ]
+    response = load_model.get_completion_from_messages(messages, "gpt-3.5-turbo", 0, 500)
+    print(response)
+
+
+def kimenet_ellenorzese():
+    final_response_to_customer = f"""
+   The SmartX ProPhone has a 6.1-inch display, 128GB storage, \
+   12MP dual camera, and 5G. The FotoSnap DSLR Camera \
+   has a 24.2MP sensor, 1080p video, 3-inch LCD, and \
+   interchangeable lenses. We have a variety of TVs, including \
+   the CineView 4K TV with a 55-inch display, 4K resolution, \
+   HDR, and smart TV features. We also have the SoundMax \
+   Home Theater system with 5.1 channel, 1000W output, wireless \
+   subwoofer, and Bluetooth. Do you have any specific questions \
+   about these products or any other products we offer?
+   """
+    response = openai.Moderation.create(input=final_response_to_customer)
+    moderation_output = response["results"][0]
+    print(moderation_output)

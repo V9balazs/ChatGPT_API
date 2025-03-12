@@ -30,3 +30,7 @@ openai.api_key = os.environ["OPENAI_API_KEY"]
 # message.prompt_injection_erzekeles()
 
 # message.lanc_gondolkozas()
+
+# message.komplex_feladat_szetbontva()
+
+message.kimenet_ellenorzese()
